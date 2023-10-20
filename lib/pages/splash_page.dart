@@ -22,26 +22,30 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: FutureBuilder(
-        future: loginFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            if (DbHelper.currentUser == null) {
-              return const LoginPage();
-            }
-            return const Column(
-              children: [
-                Text('Logged in!'),
-                TextButton(
-                  onPressed: DbHelper.logout,
-                  child: Text('Log out'),
-                ),
-              ],
-            );
-          }
-          return const Center(child: CircularProgressIndicator());
-        },
+    return FutureBuilder(
+      future: loginFuture,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _getContent();
+        }
+        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+      },
+    );
+  }
+
+  Widget _getContent() {
+    if (DbHelper.currentUser == null) {
+      return const LoginPage();
+    }
+    return const Scaffold(
+      body: Column(
+        children: [
+          Text('Logged in!'),
+          TextButton(
+            onPressed: DbHelper.logout,
+            child: Text('Log out'),
+          ),
+        ],
       ),
     );
   }

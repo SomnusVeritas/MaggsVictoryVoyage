@@ -7,26 +7,34 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     TextEditingController username = TextEditingController();
     return Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            TextField(
-              controller: username,
-              decoration: const InputDecoration(
-                label: Text('Username!'),
+        child: SizedBox(
+          width: width / 2,
+          child: Column(
+            children: [
+              const Text('Please enter your first name',
+                  style: TextStyle(
+                    color: Colors.pink,
+                  )),
+              TextField(
+                controller: username,
+                decoration: const InputDecoration(
+                  label: Text('Username!'),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () => DbHelper.login(username.text),
-              child: const Text('Login'),
-            ),
-            TextButton(
-              onPressed: () => DbHelper.logout(),
-              child: const Text('Logout'),
-            )
-          ],
+              TextButton(
+                onPressed: () => DbHelper.login(username.text),
+                child: const Text('Login'),
+              ),
+              TextButton(
+                onPressed: () => DbHelper.logout(),
+                child: const Text('Logout'),
+              )
+            ],
+          ),
         ),
       ),
     );

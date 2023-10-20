@@ -67,21 +67,21 @@ class _SplashPageState extends State<SplashPage> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.videogame_asset,
-              color: Colors.white,
+              //color: Color.fromARGB(255, 212, 206, 70),
             ),
             label: 'Games',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.emoji_events,
-              color: Colors.white,
+              //color: Color.fromARGB(255, 212, 206, 70),
             ),
             label: 'Leaderboard',
           ),
           BottomNavigationBarItem(
             icon: Icon(
               Icons.auto_awesome_rounded,
-              color: Colors.white,
+              //color: Color.fromARGB(255, 212, 206, 70),
             ),
             label: 'Events',
           ),

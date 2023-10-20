@@ -31,8 +31,9 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Maggs\' Victory Voyage',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple)
-            .copyWith(background: Colors.pink[50]),
+        colorScheme:
+            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 233, 206, 252)),
+        // .copyWith(background: const Color.fromARGB(255, 74, 186, 145)),
         useMaterial3: true,
       ),
       home: const SplashPage(),

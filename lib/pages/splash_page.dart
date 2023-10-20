@@ -54,16 +54,13 @@ class _SplashPageState extends State<SplashPage> {
 
     Provider.of<Feed>(context, listen: false).feed;
     return Scaffold(
+      appBar: AppBar(actions: [
+        IconButton(
+          onPressed: () => DbHelper.logout(),
+          icon: const Icon(Icons.logout),
+        )
+      ]),
       body: tabs.elementAt(currentPageIndex),
-      //  const Column(
-      //   children: [
-      //     Text('Logged in!'),
-      //     TextButton(
-      //       onPressed: DbHelper.logout,
-      //       child: Text('Log out'),
-      //     ),
-      //   ],
-      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

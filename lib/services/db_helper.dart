@@ -83,7 +83,10 @@ class DbHelper {
 
   static Future<List<Profile>> fetchProfiles() async {
     List<Profile> items = [];
-    final res = await _supabase.from('profiles').select();
+    final res = await _supabase.from('profiles').select().order(
+          'points',
+          ascending: false,
+        );
     for (final map in res) {
       items.add(Profile.fromMap(map));
     }

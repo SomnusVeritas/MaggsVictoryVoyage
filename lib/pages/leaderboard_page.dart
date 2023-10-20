@@ -19,13 +19,15 @@ class LeaderboardPage extends StatelessWidget {
             color:
                 isLoggedInUser ? Theme.of(context).colorScheme.secondary : null,
             child: ListTile(
-              leading: Text((index + 1).toString(),
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: isLoggedInUser
-                            ? Theme.of(context).colorScheme.onSecondary
-                            : null,
-                      )),
+              leading: Text(
+                (index + 1).toString(),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: isLoggedInUser
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : null,
+                    ),
+              ),
               title: Text(
                 leaderboard.elementAt(index).username,
                 style: TextStyle(
@@ -34,13 +36,15 @@ class LeaderboardPage extends StatelessWidget {
                       : null,
                 ),
               ),
-              trailing: Text(leaderboard.elementAt(index).points.toString(),
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                        fontWeight: FontWeight.bold,
-                        color: isLoggedInUser
-                            ? Theme.of(context).colorScheme.onSecondary
-                            : null,
-                      )),
+              trailing: Text(
+                leaderboard.elementAt(index).points.toString(),
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: isLoggedInUser
+                          ? Theme.of(context).colorScheme.onSecondary
+                          : null,
+                    ),
+              ),
             ),
           );
         });

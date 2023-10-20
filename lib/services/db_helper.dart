@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -6,6 +7,11 @@ class DbHelper {
       SharedPreferences.getInstance();
 
   static final _supabase = Supabase.instance.client;
+
+  static User? get currentUser => _supabase.auth.currentUser;
+
+  static Stream<AuthState> get authEventStream =>
+      _supabase.auth.onAuthStateChange;
 
   static Future<void> init() async {
     await Supabase.initialize(
@@ -17,22 +23,43 @@ class DbHelper {
 
   static void login(String username) async {
     final prefs = await _prefs;
-    final String? savedUsername = prefs.getString('username');
 
-    if (savedUsername == null) {
+    try {
+      await _supabase.auth.signInWithPassword(
+        email: '$username@skup.in',
+        password: 'password',
+      );
       await prefs.setString('username', username);
-      // TODO create new account
-    } else if (savedUsername == username) {
-      // TODO log into database
-    } else {
-      // TODO wrong username
+    } on AuthException catch (e) {
+      await _supabase.auth.signUp(
+          email: '$username@skup.in',
+          password: 'password',
+          data: {'username': username});
+      await prefs.setString('username', username);
     }
+  }
+
+  static Future<bool> autoLogin() async {
+    final prefs = await _prefs;
+    final String? username = prefs.getString('username');
+    if (username == null) return false;
+    try {
+      await _supabase.auth.signInWithPassword(
+        email: '$username@skup.in',
+        password: 'password',
+      );
+      return true;
+    } on AuthException catch (e) {
+      if (kDebugMode) {
+        print('Could\'t automaticall log in.\n${e.message}');
+      }
+    }
+    return false;
   }
 
   static void logout() async {
     final prefs = await _prefs;
     bool success = await prefs.remove('username');
-
-    //TODO log out on database
+    _supabase.auth.signOut();
   }
 }

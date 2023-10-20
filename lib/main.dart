@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
-
-import 'pages/login_page.dart';
 import 'pages/splash_page.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.init();
   runApp(const Application());
 }

@@ -1,15 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:maggs_victory_voyage/services/db_helper.dart';
+import 'package:provider/provider.dart';
 
-class GamesPage extends StatelessWidget {
+import '../models/profile.dart';
+import '../services/profiles_provider.dart';
+
+class GamesPage extends StatefulWidget {
   const GamesPage({super.key});
+
+  @override
+  State<GamesPage> createState() => _GamesPageState();
+}
+
+class _GamesPageState extends State<GamesPage> {
+  Profile? userProfile;
+  final List<Map<String, dynamic>> games = [
+    {
+      'name': 'Mario Kart',
+      'points': 4,
+    },
+    {
+      'name': 'Mario Party',
+      'points': 6,
+    },
+    {
+      'name': 'Exploding Kittens',
+      'points': 2,
+    },
+    {
+      'name': 'Twister',
+      'points': 2,
+    }
+  ];
   @override
   Widget build(BuildContext context) {
-    final games = [
-      'Mario Kart',
-      'Mario Party',
-      'Exploding Kittens',
-      'Twister',
-    ];
+    userProfile = Provider.of<Profiles>(context, listen: true).own;
+
     return Center(
       child: Column(
         children: _getWidgets(games, context),
@@ -17,17 +43,18 @@ class GamesPage extends StatelessWidget {
     );
   }
 
-  List<Widget> _getWidgets(List<String> list, BuildContext context) {
+  List<Widget> _getWidgets(
+      List<Map<String, dynamic>> games, BuildContext context) {
     final width = MediaQuery.of(context).size.width * 0.8;
     List<Widget> widgets = [];
-    for (final game in list) {
+    for (final game in games) {
       widgets.add(
         Expanded(
           child: SizedBox(
             width: width,
             child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
-                child: _getGamesButton(() {}, game, context)),
+                child: _getGamesButton(context, game)),
           ),
         ),
       );
@@ -43,11 +70,17 @@ class GamesPage extends StatelessWidget {
   }
 
   ElevatedButton _getGamesButton(
-      void Function()? onPressed, String title, BuildContext context) {
+      BuildContext context, Map<String, dynamic> game) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(shape: const BeveledRectangleBorder()),
-      onPressed: onPressed,
-      child: _getText(title, context),
+      onPressed: () => _onPressed(game),
+      child: _getText(game['name'], context),
     );
+  }
+
+  void _onPressed(Map<String, dynamic> game) {
+    DbHelper.pushGameWin(userProfile!.points, game['points']);
+    DbHelper.pushFeedEntry(
+        '${userProfile!.username} just won at ${game['name']}');
   }
 }

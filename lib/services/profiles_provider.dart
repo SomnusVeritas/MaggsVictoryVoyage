@@ -21,6 +21,16 @@ class Profiles extends ChangeNotifier {
     return _profiles;
   }
 
+  Profile? get own {
+    final list =
+        profiles.where((element) => element.id == DbHelper.currentUser!.id);
+    if (list.isNotEmpty) {
+      return list.first;
+    } else {
+      return null;
+    }
+  }
+
   _updateProfile(List<Map<String, dynamic>> data) {
     final List<Profile> profiles = data.map((e) => Profile.fromMap(e)).toList();
 

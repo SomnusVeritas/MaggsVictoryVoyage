@@ -90,6 +90,17 @@ class DbHelper {
     return items;
   }
 
+  static Future<void> pushFeedEntry(String text) async {
+    await _supabase
+        .from('feed')
+        .insert({'text': text, 'timestamp': DateTime.now().toString()});
+  }
+
+  static Future<void> pushGameWin(int currentPoints, int pointsWon) async {
+    await _supabase.from('profiles').update(
+        {'points': currentPoints + pointsWon}).eq('id', currentUser!.id);
+  }
+
   static Stream<List<Map<String, dynamic>>> get feedStream =>
       _supabase.from('feed').stream(primaryKey: ['timestamp']);
 

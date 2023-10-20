@@ -41,13 +41,25 @@ class _SplashPageState extends State<SplashPage> {
     if (DbHelper.currentUser == null) {
       return const LoginPage();
     }
-    return const Scaffold(
-      body: Column(
+    return Scaffold(
+      body: const Column(
         children: [
           Text('Logged in!'),
           TextButton(
             onPressed: DbHelper.logout,
             child: Text('Log out'),
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
           ),
         ],
       ),

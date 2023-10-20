@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:maggs_victory_voyage/services/feed_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'pages/splash_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DbHelper.init();
-  runApp(const Application());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => Feed(),
+        )
+      ],
+      child: const Application(),
+    ),
+  );
 }
 
 class Application extends StatelessWidget {

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
+import 'package:provider/provider.dart';
 
+import '../services/feed_provider.dart';
 import 'login_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -29,7 +31,11 @@ class _SplashPageState extends State<SplashPage> {
         if (snapshot.hasData) {
           return _getContent();
         }
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }
@@ -38,6 +44,8 @@ class _SplashPageState extends State<SplashPage> {
     if (DbHelper.currentUser == null) {
       return const LoginPage();
     }
+
+    Provider.of<Feed>(context, listen: false).feed;
     return Scaffold(
       body: const Column(
         children: [

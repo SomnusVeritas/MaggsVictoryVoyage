@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/pages/feed_page.dart';
+import 'package:maggs_victory_voyage/pages/games_page.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,7 @@ class _SplashPageState extends State<SplashPage> {
   late final Future<bool> loginFuture;
   int currentPageIndex = 0;
   final List<Widget> tabs = [
-    const FeedPage(),
+    const GamesPage(),
     const FeedPage(),
     const FeedPage(),
   ];

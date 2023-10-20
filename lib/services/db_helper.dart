@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../models/feed_item.dart';
+import '../models/profile.dart';
 
 class DbHelper {
   static Future<SharedPreferences> get _prefs async =>
@@ -65,6 +66,12 @@ class DbHelper {
     return false;
   }
 
+  static void logout() async {
+    final prefs = await _prefs;
+    await prefs.remove('username');
+    _supabase.auth.signOut();
+  }
+
   static Future<List<FeedItem>> fetchFeed() async {
     List<FeedItem> items = [];
     final res = await _supabase.from('feed').select();
@@ -74,12 +81,18 @@ class DbHelper {
     return items;
   }
 
-  static void logout() async {
-    final prefs = await _prefs;
-    await prefs.remove('username');
-    _supabase.auth.signOut();
+  static Future<List<Profile>> fetchProfiles() async {
+    List<Profile> items = [];
+    final res = await _supabase.from('profiles').select();
+    for (final map in res) {
+      items.add(Profile.fromMap(map));
+    }
+    return items;
   }
 
   static Stream<List<Map<String, dynamic>>> get feedStream =>
       _supabase.from('feed').stream(primaryKey: ['timestamp']);
+
+  static Stream<List<Map<String, dynamic>>> get profilesStream =>
+      _supabase.from('profiles').stream(primaryKey: ['id']);
 }

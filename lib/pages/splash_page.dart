@@ -5,6 +5,7 @@ import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'package:provider/provider.dart';
 
 import '../services/feed_provider.dart';
+import 'leaderboard_page.dart';
 import 'login_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   int currentPageIndex = 0;
   final List<Widget> tabs = [
     const GamesPage(),
-    const FeedPage(),
+    const LeaderboardPage(),
     const FeedPage(),
   ];
 
@@ -65,17 +66,17 @@ class _SplashPageState extends State<SplashPage> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.home,
+              Icons.videogame_asset,
               color: Colors.white,
             ),
-            label: 'Home',
+            label: 'Games',
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.add_rounded,
+              Icons.emoji_events,
               color: Colors.white,
             ),
-            label: 'Add',
+            label: 'Leaderboard',
           ),
           BottomNavigationBarItem(
             icon: Icon(

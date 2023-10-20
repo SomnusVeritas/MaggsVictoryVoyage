@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'package:provider/provider.dart';
-
-import '../models/profile.dart';
 import '../services/profiles_provider.dart';
 
 class LeaderboardPage extends StatelessWidget {
@@ -15,6 +14,8 @@ class LeaderboardPage extends StatelessWidget {
         itemCount: leaderboard.length,
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
+            selected:
+                leaderboard.elementAt(index).id == DbHelper.currentUser!.id,
             leading: Text((index + 1).toString(),
                 style: Theme.of(context)
                     .textTheme

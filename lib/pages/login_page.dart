@@ -24,6 +24,8 @@ class LoginPage extends StatelessWidget {
               const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
               TextField(
                 controller: username,
+                onSubmitted: (value) => DbHelper.login(username.text),
+                textInputAction: TextInputAction.done,
                 decoration: const InputDecoration(
                   label: Text('Username'),
                   border: OutlineInputBorder(),

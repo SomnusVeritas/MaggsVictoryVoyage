@@ -15,13 +15,17 @@ class _FeedPageState extends State<FeedPage> {
   Widget build(BuildContext context) {
     final feed = Provider.of<Feed>(context, listen: true).feed.reversed;
     return ListView.builder(
+      padding: const EdgeInsets.all(8),
       itemCount: feed.length,
       itemBuilder: (context, index) {
         final feedItem = feed.elementAt(index);
-        return ListTile(
-          title: Text(feedItem.text),
-          subtitle: Text(
-            feedItem.timestamp.toString(),
+        return Card(
+          child: ListTile(
+            title: Text(feedItem.text),
+            trailing: Text(
+              '${feedItem.timestamp.hour}:${feedItem.timestamp.minute}',
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
+            ),
           ),
         );
       },

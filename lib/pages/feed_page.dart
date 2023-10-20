@@ -13,7 +13,7 @@ class FeedPage extends StatefulWidget {
 class _FeedPageState extends State<FeedPage> {
   @override
   Widget build(BuildContext context) {
-    final feed = Provider.of<Feed>(context, listen: true).feed;
+    final feed = Provider.of<Feed>(context, listen: true).feed.reversed;
     return ListView.builder(
       itemCount: feed.length,
       itemBuilder: (context, index) {

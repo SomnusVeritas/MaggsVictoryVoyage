@@ -12,6 +12,7 @@ class SplashPage extends StatefulWidget {
 
 class _SplashPageState extends State<SplashPage> {
   late final Future<bool> loginFuture;
+  int currentPageIndex = 0;
 
   @override
   void initState() {
@@ -50,14 +51,29 @@ class _SplashPageState extends State<SplashPage> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(
+              Icons.home,
+              color: Colors.white,
+            ),
             label: 'Home',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.add_rounded,
+              color: Colors.white,
+            ),
+            label: 'Add',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.auto_awesome_rounded,
+              color: Colors.white,
+            ),
+            label: 'Events',
+          ),
         ],
+        currentIndex: currentPageIndex,
+        onTap: (index) => setState(() => currentPageIndex = index),
       ),
     );
   }

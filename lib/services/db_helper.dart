@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../models/feed_item.dart';
+
 class DbHelper {
   static Future<SharedPreferences> get _prefs async =>
       SharedPreferences.getInstance();
@@ -58,9 +60,21 @@ class DbHelper {
     return false;
   }
 
+  static Future<List<FeedItem>> fetchFeed() async {
+    List<FeedItem> items = [];
+    final res = await _supabase.from('feed').select();
+    for (final map in res) {
+      items.add(FeedItem.fromMap(map));
+    }
+    return items;
+  }
+
   static void logout() async {
     final prefs = await _prefs;
     bool success = await prefs.remove('username');
     _supabase.auth.signOut();
   }
+
+  static Stream<List<Map<String, dynamic>>> get feedStream =>
+      _supabase.from('feed').stream(primaryKey: ['timestamp']);
 }

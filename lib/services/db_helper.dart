@@ -22,6 +22,7 @@ class DbHelper {
   }
 
   static void login(String username) async {
+    if (username.length < 2) return;
     final prefs = await _prefs;
 
     try {

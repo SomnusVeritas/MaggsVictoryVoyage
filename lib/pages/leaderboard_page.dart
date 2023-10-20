@@ -13,20 +13,35 @@ class LeaderboardPage extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         itemCount: leaderboard.length,
         itemBuilder: (BuildContext context, int index) {
-          return ListTile(
-            selected:
-                leaderboard.elementAt(index).id == DbHelper.currentUser!.id,
-            leading: Text((index + 1).toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.bold)),
-            title: Text(leaderboard.first.username),
-            trailing: Text(leaderboard.first.points.toString(),
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontWeight: FontWeight.bold)),
+          final isLoggedInUser =
+              leaderboard.elementAt(index).id == DbHelper.currentUser!.id;
+          return Card(
+            color:
+                isLoggedInUser ? Theme.of(context).colorScheme.secondary : null,
+            child: ListTile(
+              leading: Text((index + 1).toString(),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: isLoggedInUser
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : null,
+                      )),
+              title: Text(
+                leaderboard.elementAt(index).username,
+                style: TextStyle(
+                  color: isLoggedInUser
+                      ? Theme.of(context).colorScheme.onSecondary
+                      : null,
+                ),
+              ),
+              trailing: Text(leaderboard.elementAt(index).points.toString(),
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: isLoggedInUser
+                            ? Theme.of(context).colorScheme.onSecondary
+                            : null,
+                      )),
+            ),
           );
         });
   }

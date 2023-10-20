@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:maggs_victory_voyage/pages/feed_page.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,11 @@ class SplashPage extends StatefulWidget {
 class _SplashPageState extends State<SplashPage> {
   late final Future<bool> loginFuture;
   int currentPageIndex = 0;
+  final List<Widget> tabs = [
+    const FeedPage(),
+    const FeedPage(),
+    const FeedPage(),
+  ];
 
   @override
   void initState() {
@@ -47,15 +53,16 @@ class _SplashPageState extends State<SplashPage> {
 
     Provider.of<Feed>(context, listen: false).feed;
     return Scaffold(
-      body: const Column(
-        children: [
-          Text('Logged in!'),
-          TextButton(
-            onPressed: DbHelper.logout,
-            child: Text('Log out'),
-          ),
-        ],
-      ),
+      body: tabs.elementAt(currentPageIndex),
+      //  const Column(
+      //   children: [
+      //     Text('Logged in!'),
+      //     TextButton(
+      //       onPressed: DbHelper.logout,
+      //       child: Text('Log out'),
+      //     ),
+      //   ],
+      // ),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(

@@ -33,11 +33,16 @@ class DbHelper {
         password: 'password',
       );
       await prefs.setString('username', username);
-    } on AuthException catch (e) {
+    } on AuthException catch (_) {
       await _supabase.auth.signUp(
           email: '$username@skup.in',
           password: 'password',
-          data: {'username': username});
+          data: {'username': username}).whenComplete(
+        () => _supabase.from('profiles').update({'username': username}).eq(
+          'id',
+          currentUser!.id,
+        ),
+      );
       await prefs.setString('username', username);
     }
   }
@@ -71,7 +76,7 @@ class DbHelper {
 
   static void logout() async {
     final prefs = await _prefs;
-    bool success = await prefs.remove('username');
+    await prefs.remove('username');
     _supabase.auth.signOut();
   }
 

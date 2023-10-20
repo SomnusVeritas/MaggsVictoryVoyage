@@ -15,23 +15,24 @@ class LoginPage extends StatelessWidget {
           width: width / 2,
           child: Column(
             children: [
-              const Text('Please enter your first name',
+              const Text('Welcome!',
                   style: TextStyle(
-                    color: Colors.pink,
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   )),
+              const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
               TextField(
                 controller: username,
                 decoration: const InputDecoration(
-                  label: Text('Username!'),
+                  label: Text('Username'),
+                  border: OutlineInputBorder(),
                 ),
               ),
-              TextButton(
+              const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
+              ElevatedButton(
                 onPressed: () => DbHelper.login(username.text),
                 child: const Text('Login'),
-              ),
-              TextButton(
-                onPressed: () => DbHelper.logout(),
-                child: const Text('Logout'),
               )
             ],
           ),

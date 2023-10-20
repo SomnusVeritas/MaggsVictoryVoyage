@@ -28,7 +28,11 @@ class _SplashPageState extends State<SplashPage> {
         if (snapshot.hasData) {
           return _getContent();
         }
-        return const Scaffold(body: Center(child: CircularProgressIndicator()));
+        return const Scaffold(
+          body: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
     );
   }

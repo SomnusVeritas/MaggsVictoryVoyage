@@ -60,11 +60,10 @@ class _GamesPageState extends State<GamesPage> {
   }
 
   _winConfirmed(int placement, Game game) {
-    DbHelper.pushGameWin(
-        userProfile!.points,
-        game.rewards
-            .singleWhere((element) => element.placement == placement)
-            .reward);
+    int reward = game.rewards
+        .singleWhere((element) => element.placement == placement)
+        .reward;
+    DbHelper.pushGameWin(userProfile!.points, reward);
 
     String feedText = '';
     if (placement == 1) {
@@ -77,6 +76,9 @@ class _GamesPageState extends State<GamesPage> {
       feedText =
           '${userProfile!.username} just got ${placement}th place in ${game.name}';
     }
+
+    ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('You just earned $reward points')));
 
     DbHelper.pushFeedEntry(feedText);
   }

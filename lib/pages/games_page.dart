@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
-import 'package:maggs_victory_voyage/widgets/GamesButton.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game.dart';
 import '../models/profile.dart';
 import '../services/games_provider.dart';
 import '../services/profiles_provider.dart';
+import '../widgets/games_button.dart';
 
 class GamesPage extends StatefulWidget {
   const GamesPage({super.key});
@@ -79,7 +79,12 @@ class _GamesPageState extends State<GamesPage> {
     } else {
       final List<Widget> list = [];
       for (final game in games) {
-        list.add(const GamesButton());
+        list.add(
+          GamesButton(
+            title: game.name,
+            buttonPressed: () {},
+          ),
+        );
       }
       return list;
     }

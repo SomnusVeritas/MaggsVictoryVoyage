@@ -31,11 +31,11 @@ class Application extends StatelessWidget {
     return MaterialApp(
       title: 'Maggs\' Victory Voyage',
       theme: ThemeData(
-        colorScheme:
-            ColorScheme.fromSeed(seedColor: Color.fromARGB(255, 233, 206, 252)),
-        // .copyWith(background: const Color.fromARGB(255, 74, 186, 145)),
-        useMaterial3: true,
-      ),
+          colorScheme: ColorScheme.fromSeed(
+              seedColor: const Color.fromARGB(255, 233, 206, 252)),
+          // .copyWith(background: const Color.fromARGB(255, 74, 186, 145)),
+          useMaterial3: true,
+          fontFamily: 'Ubuntu'),
       home: const SplashPage(),
     );
   }

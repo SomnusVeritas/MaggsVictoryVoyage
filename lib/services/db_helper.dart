@@ -107,6 +107,7 @@ class DbHelper {
   static Stream<List<Map<String, dynamic>>> get feedStream =>
       _supabase.from('feed').stream(primaryKey: ['timestamp']);
 
-  static Stream<List<Map<String, dynamic>>> get profilesStream =>
-      _supabase.from('profiles').stream(primaryKey: ['id']);
+  static Stream<List<Map<String, dynamic>>> get profilesStream => _supabase
+      .from('profiles')
+      .stream(primaryKey: ['id']).order('points', ascending: false);
 }

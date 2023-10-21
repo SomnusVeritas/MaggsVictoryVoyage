@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:maggs_victory_voyage/models/game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -91,6 +92,22 @@ class DbHelper {
       items.add(Profile.fromMap(map));
     }
     return items;
+  }
+
+  static Future<List<Game>> fetchGames() async {
+    List<Game> games = [];
+    final res = await _supabase.from('games').select().eq('active', true);
+    final rewardsRes =
+        await _supabase.from('rewards').select<List<Map<String, dynamic>>>();
+
+    for (final map in res) {
+      final rewards =
+          rewardsRes.where((element) => element['game_id'] == map['id']);
+      final game = Game.fromMap(map, rewards);
+      games.add(game);
+    }
+
+    return games;
   }
 
   static Future<void> pushFeedEntry(String text) async {

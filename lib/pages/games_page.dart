@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
+import 'package:maggs_victory_voyage/widgets/GamesButton.dart';
 import 'package:provider/provider.dart';
 
+import '../models/game.dart';
 import '../models/profile.dart';
+import '../services/games_provider.dart';
 import '../services/profiles_provider.dart';
 
 class GamesPage extends StatefulWidget {
@@ -14,31 +17,17 @@ class GamesPage extends StatefulWidget {
 
 class _GamesPageState extends State<GamesPage> {
   Profile? userProfile;
-  final List<Map<String, dynamic>> games = [
-    {
-      'name': 'Mario Kart',
-      'points': 4,
-    },
-    {
-      'name': 'Mario Party',
-      'points': 6,
-    },
-    {
-      'name': 'Exploding Kittens',
-      'points': 2,
-    },
-    {
-      'name': 'Twister',
-      'points': 2,
-    }
-  ];
+  List<Game> games = [];
+
   @override
   Widget build(BuildContext context) {
     userProfile = Provider.of<Profiles>(context, listen: true).own;
+    games = Provider.of<Games>(context, listen: true).games;
 
     return Center(
       child: Column(
-        children: _getWidgets(games, context),
+        children: _getGames(),
+        // _getWidgets(games, context),
       ),
     );
   }
@@ -82,5 +71,17 @@ class _GamesPageState extends State<GamesPage> {
     DbHelper.pushGameWin(userProfile!.points, game['points']);
     DbHelper.pushFeedEntry(
         '${userProfile!.username} just won at ${game['name']}');
+  }
+
+  List<Widget> _getGames() {
+    if (games.isEmpty) {
+      return [const CircularProgressIndicator()];
+    } else {
+      final List<Widget> list = [];
+      for (final game in games) {
+        list.add(const GamesButton());
+      }
+      return list;
+    }
   }
 }

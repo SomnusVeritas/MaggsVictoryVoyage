@@ -3,6 +3,7 @@ import 'package:maggs_victory_voyage/services/feed_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
 import 'pages/splash_page.dart';
+import 'services/games_provider.dart';
 import 'services/profiles_provider.dart';
 
 void main() async {
@@ -16,6 +17,9 @@ void main() async {
         ),
         ChangeNotifierProvider(
           create: (_) => Profiles(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Games(),
         )
       ],
       child: const Application(),

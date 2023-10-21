@@ -33,47 +33,6 @@ class _GamesPageState extends State<GamesPage> {
     );
   }
 
-  List<Widget> _getWidgets(
-      List<Map<String, dynamic>> games, BuildContext context) {
-    final width = MediaQuery.of(context).size.width * 0.8;
-    List<Widget> widgets = [];
-    for (final game in games) {
-      widgets.add(
-        Expanded(
-          child: SizedBox(
-            width: width,
-            child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: _getGamesButton(context, game)),
-          ),
-        ),
-      );
-    }
-    return widgets;
-  }
-
-  Text _getText(String text, BuildContext context) {
-    return Text(
-      text,
-      style: Theme.of(context).textTheme.headlineSmall,
-    );
-  }
-
-  ElevatedButton _getGamesButton(
-      BuildContext context, Map<String, dynamic> game) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(shape: const BeveledRectangleBorder()),
-      onPressed: () => _onPressed(game),
-      child: _getText(game['name'], context),
-    );
-  }
-
-  void _onPressed(Map<String, dynamic> game) {
-    DbHelper.pushGameWin(userProfile!.points, game['points']);
-    DbHelper.pushFeedEntry(
-        '${userProfile!.username} just won at ${game['name']}');
-  }
-
   List<Widget> _getGames() {
     if (games.isEmpty) {
       return [const CircularProgressIndicator()];
@@ -89,7 +48,7 @@ class _GamesPageState extends State<GamesPage> {
                 builder: (context) => GamesPopup(
                   withPlacements: game.rewards.length > 1,
                   game: game,
-                  onSubmitted: (_) {},
+                  onSubmitted: (placement) => _winConfirmed(placement, game),
                 ),
               );
             },
@@ -98,5 +57,27 @@ class _GamesPageState extends State<GamesPage> {
       }
       return list;
     }
+  }
+
+  _winConfirmed(int placement, Game game) {
+    DbHelper.pushGameWin(
+        userProfile!.points,
+        game.rewards
+            .singleWhere((element) => element.placement == placement)
+            .reward);
+
+    String feedText = '';
+    if (placement == 1) {
+      feedText = '${userProfile!.username} just won at ${game.name}';
+    } else if (placement == 2) {
+      feedText = '${userProfile!.username} just got 2nd place in ${game.name}';
+    } else if (placement == 3) {
+      feedText = '${userProfile!.username} just got 3rd place in ${game.name}';
+    } else {
+      feedText =
+          '${userProfile!.username} just got ${placement}th place in ${game.name}';
+    }
+
+    DbHelper.pushFeedEntry(feedText);
   }
 }

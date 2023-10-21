@@ -22,10 +22,19 @@ class _FeedPageState extends State<FeedPage> {
         return Card(
           child: ListTile(
             title: Text(feedItem.text),
-            subtitle: Text(getTimeString(feedItem.timestamp)),
-            trailing: Text(
-              '${feedItem.timestamp.hour}:${feedItem.timestamp.minute}',
-              style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(getTimeString(feedItem.timestamp)),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 15),
+                ),
+                Text(
+                  '${feedItem.timestamp.hour}:${feedItem.timestamp.minute}',
+                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
+                ),
+              ],
             ),
           ),
         );
@@ -46,9 +55,11 @@ String getTimeString(DateTime time) {
   } else if (duration.inDays > 1) {
     return '${duration.inDays} days ago';
   } else if (duration.inHours > 0) {
-    return '${duration.inHours} hours ago';
+    String text = duration.inHours == 1 ? 'hour' : 'hours';
+    return '${duration.inHours} $text ago';
   } else if (duration.inMinutes > 0) {
-    return '${duration.inMinutes} minutes ago';
+    String text = duration.inMinutes == 1 ? 'minute' : 'minutes';
+    return '${duration.inMinutes} $text ago';
   } else {
     return 'just seconds ago';
   }

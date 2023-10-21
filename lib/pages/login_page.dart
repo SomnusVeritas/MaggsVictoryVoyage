@@ -7,36 +7,47 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    double width = MediaQuery.of(context).size.width / 2;
+    width = width < 400 ? 400 : width;
     TextEditingController username = TextEditingController();
     return Scaffold(
       body: Center(
-        child: SizedBox(
-          width: width / 2,
-          child: Column(
-            children: [
-              const Text('Welcome!',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  )),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-              TextField(
-                controller: username,
-                onSubmitted: (value) => DbHelper.login(username.text),
-                textInputAction: TextInputAction.done,
-                decoration: const InputDecoration(
-                  label: Text('Username'),
-                  border: OutlineInputBorder(),
-                ),
+        child: Card(
+          child: Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: SizedBox(
+              width: width,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    'Welcome!',
+                    style: Theme.of(context)
+                        .textTheme
+                        .displayMedium!
+                        .copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
+                  Text('please enter your first name to get started',
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                  TextField(
+                    controller: username,
+                    onSubmitted: (value) => DbHelper.login(username.text),
+                    textInputAction: TextInputAction.done,
+                    decoration: const InputDecoration(
+                      label: Text('Your first name'),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 15)),
+                  FloatingActionButton.extended(
+                    onPressed: () => DbHelper.login(username.text),
+                    label: const Text('READY'),
+                  )
+                ],
               ),
-              const Padding(padding: EdgeInsets.symmetric(vertical: 20)),
-              ElevatedButton(
-                onPressed: () => DbHelper.login(username.text),
-                child: const Text('Login'),
-              )
-            ],
+            ),
           ),
         ),
       ),

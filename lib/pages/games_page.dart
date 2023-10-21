@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:maggs_victory_voyage/services/db_helper.dart';
+import 'package:maggs_victory_voyage/widgets/games_popup.dart';
 import 'package:provider/provider.dart';
 
 import '../models/game.dart';
@@ -82,7 +83,16 @@ class _GamesPageState extends State<GamesPage> {
         list.add(
           GamesButton(
             title: game.name,
-            buttonPressed: () {},
+            buttonPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => GamesPopup(
+                  withPlacements: game.rewards.length > 1,
+                  game: game,
+                  onSubmitted: (_) {},
+                ),
+              );
+            },
           ),
         );
       }

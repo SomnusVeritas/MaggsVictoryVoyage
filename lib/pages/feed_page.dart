@@ -22,19 +22,10 @@ class _FeedPageState extends State<FeedPage> {
         return Card(
           child: ListTile(
             title: Text(feedItem.text),
-            trailing: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(getTimeString(feedItem.timestamp)),
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15),
-                ),
-                Text(
-                  '${feedItem.timestamp.hour}:${feedItem.timestamp.minute}',
-                  style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
-                ),
-              ],
+            subtitle: Text(getTimeString(feedItem.timestamp)),
+            trailing: Text(
+              '${feedItem.timestamp.hour}:${feedItem.timestamp.minute}',
+              style: Theme.of(context).textTheme.bodyLarge!.copyWith(),
             ),
           ),
         );
